@@ -34,8 +34,14 @@
                         <span>Filter: </span>
                         <input type="text" size="50" id="filterTextBox" placeholder="Enter any text to filter subscriptions" onkeyup="filterSubscriptions()">
                         <input type="checkbox" class="statusCheckbox" id="SubscribedOnly" onchange="filterSubscriptions()"/> Hide Unsubscribed
-                        
-                    
+                        <span class="ml20">Offer: </span>
+                        <select id="offerFilter" onchange="filterSubscriptions()">
+                            <option value="">All Offers</option>
+                            @foreach (var offerId in Model.Subscriptions.Select(s => s.OfferId).Where(o => !string.IsNullOrEmpty(o)).Distinct().OrderBy(o => o))
+                            {
+                                <option value="@offerId">@offerId</option>
+                            }
+                        </select>
                     </div>
 
                     <div class="table-responsive mt20">
@@ -272,20 +278,22 @@
 
         var filterValue = $("#filterTextBox").val().toLowerCase();
         var isChecked = $(".statusCheckbox").is(':checked');
+        var offerValue = $("#offerFilter").val().toLowerCase();
 
-        if(isChecked){
-
-            var activeSubscriptions = $("#table tbody tr:not(#Unsubscribed)");
+        // When "Hide Unsubscribed" is checked, hide every row first and only
+        // evaluate the active ones; otherwise evaluate all rows.
+        if (isChecked) {
             $("#table tbody tr").hide();
-            activeSubscriptions.show();
-
-            activeSubscriptions.filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(filterValue) > -1);
-            });
-        } else{
-            $("#table tbody tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(filterValue) > -1);
-            });
         }
+        var rows = isChecked ? $("#table tbody tr:not(#Unsubscribed)") : $("#table tbody tr");
+
+        rows.each(function () {
+            var row = $(this);
+            var textMatch = row.text().toLowerCase().indexOf(filterValue) > -1;
+            // The "Offer" column is the 4th cell (index 3) in each row.
+            var offerText = row.find("td").eq(3).text().trim().toLowerCase();
+            var offerMatch = offerValue === "" || offerText === offerValue;
+            row.toggle(textMatch && offerMatch);
+        });
     }
 </script>

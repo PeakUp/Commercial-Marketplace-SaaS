@@ -17,7 +17,7 @@ name: "Build Deploy and Test"
 on:
   push:
     branches:
-      - main
+      - peakup-main
 
 env:  
   CUSTOMER_PROJECT: './src/CustomerSite/CustomerSite.csproj'
