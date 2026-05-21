@@ -285,7 +285,7 @@
         if (isChecked) {
             $("#table tbody tr").hide();
         }
-        var rows = isChecked ? $("#table tbody tr:not(#Unsubscribed)") : $("#table tbody tr");
+        var rows = isChecked ? $("#table tbody tr").not("[id='Unsubscribed']") : $("#table tbody tr");
 
         rows.each(function () {
             var row = $(this);
