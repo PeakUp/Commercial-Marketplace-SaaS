@@ -12,11 +12,13 @@
 }
 
 .cm-top-nav-bar {
-    background-color: #004578 !important;
+    background-color: #EA3340 !important;
     margin-bottom: 0px;
     border: 0px;
-    height:48px;
+    height: 80px;
     border-radius: 0;
+    display: flex;
+    align-items: center;
 }
 
 .cm-menu-bar {
@@ -49,6 +51,7 @@
     color: white !important;
 }
 
+
 .cm-menu-item {
     color: black !important;
     padding: 0px !important;
@@ -59,16 +62,13 @@
 }
 
 .cm-logo {
-    /*border-style: none;
-    width: auto;
-    padding: 8px;
-    
-    width: 30%;*/
     border-style: none;
     width: auto;
-    margin-left: -10px;
-    padding: 8px;
-    max-height: 50px;
+    margin-left: 0;
+    padding: 12px 16px;
+    max-height: 72px;
+    height: auto;
+    filter: brightness(0) invert(1);
 }
 
 .cm-panel-default {
